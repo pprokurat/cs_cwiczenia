@@ -10,7 +10,15 @@ namespace Hello
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+           GenHTML kodHTML = new GenHTML(5,5);
+
+            kodHTML.AddHTML();
+
+            //kodHTML.WriteHTML();
+
+            kodHTML.ToFile();
+                      
+
             Console.ReadLine();
         }
     }
