@@ -14,6 +14,12 @@ namespace Hello
         private string footerText; 
         StringBuilder builder = new StringBuilder();
 
+        public GenHTML()
+        {
+            width = 5;
+            height = 0;
+        }
+
         public GenHTML(int width, int height)
         {
             this.width = width;
@@ -30,6 +36,11 @@ namespace Hello
             this.footerText = footerText;
         }
 
+        public void AddRow()
+        {
+            this.height = this.height+1;
+        }
+
         public void AddHTML()
         {
             
@@ -42,13 +53,13 @@ namespace Hello
             builder.AppendLine("<body>");           
             builder.AppendLine("<table>");
             builder.AppendLine("<thead><tr>");
-            builder.AppendLine("<th colspan='" + height + "'>" + headerText + "</th>");
+            builder.AppendLine("<th colspan='" + width + "'>" + headerText + "</th>");
             builder.AppendLine("</tr></thead>");
             builder.AppendLine("<tbody>");
-            for (int i = 1; i <= width; i++)
+            for (int i = 1; i <= height; i++)
             {
                 builder.AppendLine("<tr>");
-                for (int j = 1; j <= height; j++)
+                for (int j = 1; j <= width; j++)
                 {
                     builder.AppendLine("<td>["+i+","+j+"]</td>");
                 }
@@ -56,14 +67,11 @@ namespace Hello
             }
             builder.AppendLine("</tbody>");
             builder.AppendLine("<tfoot><tr>");
-            builder.AppendLine("<td colspan='" + height + "'>" + footerText + "</td>");
+            builder.AppendLine("<td colspan='" + width + "'>" + footerText + "</td>");
             builder.AppendLine("</tr></tfoot>");
             builder.AppendLine("</table>");
             builder.AppendLine("</body>");
             builder.AppendLine("</html>");
-
-
-
             
         }
 
