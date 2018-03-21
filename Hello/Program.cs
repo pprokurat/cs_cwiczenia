@@ -10,20 +10,16 @@ namespace Hello
     {
         static void Main(string[] args)
         {
-           GenHTML docHTML = new GenHTML();
+            GenHTML docHTML = new GenHTML();
 
-            docHTML.AddHeaderText("Hello World!");
+            docHTML.Test1();
 
-            docHTML.AddFooterText("Witaj świecie!");
+            docHTML.Test2();
 
-            docHTML.AddRow();
+            docHTML.Test3();
 
-            docHTML.AddHTML();
-
-            //docHTML.WriteHTML();
-
-            docHTML.ToFile();
-                      
+            docHTML.Test4();
+                                 
 
             Console.ReadLine();
         }
