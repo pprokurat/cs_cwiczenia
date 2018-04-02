@@ -43,7 +43,6 @@ namespace Hello
 
         public void AddHTML()
         {
-            
             builder.AppendLine("<!doctype html>");
             builder.AppendLine("<html>");
             builder.AppendLine("<head>");

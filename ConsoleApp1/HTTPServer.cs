@@ -13,7 +13,10 @@ namespace ConsoleApp1
 {
     class HTTPServer
     {
+        public const String MSG_DIR = "/root/msg/";
+        public const String WEB_DIR = "/root/web/";
         public const String VERSION = "HTTP/1.1";
+        public const String NAME = "PP HTTP Server v0.1";
 
         private bool running = false;
 
