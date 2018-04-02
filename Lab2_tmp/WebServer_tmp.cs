@@ -10,18 +10,19 @@ using System.IO;
 
 namespace Lab2_tmp
 {
-    public class WebServer
+    public class WebServer_tmp
     {
         private string port;
-        private string path;        
+        private string path;
+        HttpListener listener = null;
 
-        public WebServer()
+        public WebServer_tmp()
         {
             port = "8000";
             path = "E:/dokumenty_studia/zaawansowane_techniki_programowania_C#/ćwiczenia/cs_cwiczenia/Lab2_tmp/";
         }
 
-        public WebServer(string port, string path)
+        public WebServer_tmp(string port, string path)
         {
             this.port = port;
             this.path = path;
@@ -35,8 +36,7 @@ namespace Lab2_tmp
 
             try
             {
-                while (true)
-                {
+                
                 Console.WriteLine("Waiting...");
                 HttpListenerContext context = listener.GetContext();
                 Random rnd = new Random();
@@ -50,24 +50,25 @@ namespace Lab2_tmp
                 {
                     using (StreamWriter writer = new StreamWriter(stream))
                     {
-                        writer.Write(msg);
+                        writer.Write(msg);                        
                     }
                 }
 
-                Console.WriteLine("msg sent");
-                }
+                Console.WriteLine("msg sent "+context.Response.StatusCode);
+                
             }              
             catch (WebException e)
             {
                 Console.WriteLine(e.Status);
             }
 
-        }    
+        }
 
-        //public void Stop()
-        //{
-        //    listener.Stop();
-        //}
+        public void Stop()
+        {
+            if(listener != null)
+            listener.Stop();
+        }
 
     }
 }

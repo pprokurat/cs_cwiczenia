@@ -16,11 +16,11 @@ namespace Lab2_tmp
     {
         static void Main(string[] args)
         {
-            WebServer ws = new WebServer();
+            WebServer_tmp ws = new WebServer_tmp();
             ws.Run();
             Console.WriteLine("A simple webserver. Press a key to quit.");
             Console.ReadKey();
-            //ws.Stop();
+            ws.Stop();
 
         }
     }
