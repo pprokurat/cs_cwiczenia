@@ -7,53 +7,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Lab2
 {
     public partial class Form1 : Form
     {
-        private string portNumber;
+        private int portNumber;
         private string folderPath;
-        //WebServer ws = null;
+        WebServer ws = new WebServer();
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        
+
         public void PortNr_TextChanged(object sender, EventArgs e)
         {
-            portNumber = PortNr.Text;
+            int x = Int32.Parse(PortNr.Text);
+            portNumber = x;
         }
 
         private void FolderPath_TextChanged(object sender, EventArgs e)
         {
             folderPath = FolderPath.Text;
         }
+
         private void RunButton_Click(object sender, EventArgs e)
         {
-            if(portNumber == "" || folderPath == "")
+            if(PortNr.Text != "")
             {
-                WebServer ws = new WebServer();
-                ws.Run();
+                ws.port = portNumber;                
             }
-            else
+
+            if (FolderPath.Text != "")
             {
-                WebServer ws = new WebServer(portNumber,folderPath);
-                ws.Run();
+                ws.path = folderPath;
             }
             
+            ws.Run();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
         {
-            //if (ws != null)
-            //    ws.Stop();
+            ws.Stop();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
+        
     }
 }

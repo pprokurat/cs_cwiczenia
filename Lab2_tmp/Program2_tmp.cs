@@ -20,7 +20,7 @@ namespace Lab2_tmp
             ws.Run();
             Console.WriteLine("A simple webserver. Press a key to quit.");
             Console.ReadKey();
-            ws.Stop();
+            //ws.Stop();
 
         }
     }
