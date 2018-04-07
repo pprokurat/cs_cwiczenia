@@ -84,10 +84,22 @@ namespace Lab2
                     catch (Exception e)
                     {
                         //error
-                        sw.WriteLine("HTTP/1.1 404 OK\n");
-                        sw.WriteLine("<h1>Error 404. Page not found.</h1>");
+                        Type t = e.GetType();
+                        if (t == typeof(System.IO.FileNotFoundException))
+                        {
+                            sw.WriteLine("HTTP/1.1 404 OK\n");
+                            sw.WriteLine("<h1>Error 404. Page not found.</h1>");
+                            sw.Flush();
+                        }
 
-
+                        if (t != typeof(System.IO.FileNotFoundException))
+                        {
+                            sw.WriteLine("HTTP/1.1 500 OK\n");
+                            sw.WriteLine("<h1>Error 500. Internal server error.</h1>");
+                            sw.Flush();
+                        }
+                                            
+                        
                         Console.WriteLine(e);
                     }
                     client.Close();

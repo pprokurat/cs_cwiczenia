@@ -70,6 +70,9 @@ namespace Lab2
             
         }
 
-        
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ws.Stop();
+        }
     }
 }
