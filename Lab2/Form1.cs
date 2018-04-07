@@ -26,8 +26,18 @@ namespace Lab2
 
         public void PortNr_TextChanged(object sender, EventArgs e)
         {
-            int x = Int32.Parse(PortNr.Text);
-            portNumber = x;
+            try
+            {
+                if (PortNr.Text != null)
+                {
+                    int x = Int32.Parse(PortNr.Text);
+                    portNumber = x;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void FolderPath_TextChanged(object sender, EventArgs e)
@@ -47,7 +57,7 @@ namespace Lab2
                 ws.path = folderPath;
             }
             
-            ws.Run();
+            ws.Start();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -59,6 +69,7 @@ namespace Lab2
         {
             
         }
+
         
     }
 }

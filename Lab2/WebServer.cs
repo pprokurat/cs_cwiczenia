@@ -28,16 +28,25 @@ namespace Lab2
             this.path = path;
         }
 
+        public void Start()
+        {
+            running = true;
+            Thread operationThread = new Thread(Run);
+            operationThread.Name = "Operation thread 1";
+            operationThread.Start();
+        }
+
         public void Run()
         {
+            
             try
             {
 
-
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             TcpListener listener = new TcpListener(ipAddress, port);
-            listener.Start();
-                running = true;
+                listener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                listener.Start();
+                
 
                 while (running == true)
                 {
@@ -83,6 +92,7 @@ namespace Lab2
                     }
                     client.Close();
                 }
+                listener.Stop();
             }
             catch (WebException e)
             {
