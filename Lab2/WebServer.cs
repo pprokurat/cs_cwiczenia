@@ -81,27 +81,25 @@ namespace Lab2
                         }
 
                     }
+                    catch (FileNotFoundException e)
+                    {
+                        sw.WriteLine("HTTP/1.1 404 OK\n");
+                        sw.WriteLine("<h1>Error 404. Page not found.</h1>");
+                        sw.Flush();
+
+                        Console.WriteLine(e);
+                    }
                     catch (Exception e)
                     {
                         //error
-                        Type t = e.GetType();
-                        if (t == typeof(System.IO.FileNotFoundException))
-                        {
-                            sw.WriteLine("HTTP/1.1 404 OK\n");
-                            sw.WriteLine("<h1>Error 404. Page not found.</h1>");
-                            sw.Flush();
-                        }
-
-                        if (t != typeof(System.IO.FileNotFoundException))
-                        {
-                            sw.WriteLine("HTTP/1.1 500 OK\n");
-                            sw.WriteLine("<h1>Error 500. Internal server error.</h1>");
-                            sw.Flush();
-                        }
-                                            
                         
+                        sw.WriteLine("HTTP/1.1 500 OK\n");
+                        sw.WriteLine("<h1>Error 500. Internal server error.</h1>");
+                        sw.Flush();
+
                         Console.WriteLine(e);
-                    }
+                    }                                                                                 
+                    
                     client.Close();
                 }
                 listener.Stop();

@@ -107,6 +107,7 @@
             this.Controls.Add(this.FolderPath);
             this.Controls.Add(this.RunButton);
             this.Controls.Add(this.PortNr);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "WebServer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
