@@ -14,7 +14,7 @@ namespace Lab3
 {
     public partial class Form1 : Form
     {
-        private string path = "C:/dokumenty_studia/zaawansowane_techniki_programowania_C#/ćwiczenia/cs_cwiczenia";
+        private string path = "E:/dokumenty_studia/zaawansowane_techniki_programowania_C#/ćwiczenia/cs_cwiczenia";
 
         public Form1()
         {
@@ -38,8 +38,9 @@ namespace Lab3
                 string[] files = System.IO.Directory.GetFiles(path, "*.sln");
                 String[] vcproj_array = new String[100];
                 String[] outputFiles_array = new String[100];
+                String[] outputFiles_array2 = new String[100];
 
-                string root = "C:/dokumenty_studia/zaawansowane_techniki_programowania_c#/ćwiczenia/kopia";
+                string root = "E:/dokumenty_studia/zaawansowane_techniki_programowania_c#/ćwiczenia/kopia";
 
                 if (!Directory.Exists(root))
                 {
@@ -49,7 +50,7 @@ namespace Lab3
                 for (int i = 0; i < files.Length; i++)
                 {
                     Console.WriteLine(files[i]);
-                    string sub = files[i].Substring(path.Length, files[i].Length-path.Length);                    
+                    string sub = files[i].Substring(path.Length, files[i].Length - path.Length);
                     File.Copy(path + "/" + sub, root + "/" + sub, true);
                     if (i >= files.Length)
                         break;
@@ -58,26 +59,28 @@ namespace Lab3
                 int counter = 0;
                 for (int i = 0; i < files.Length; i++)
                 {
-                    
+
                     System.IO.StreamReader file = new System.IO.StreamReader(files[i]);
                     string line;
+                    string[] substring = new String[100];
                     
-
                     while ((line = file.ReadLine()) != null)
                     {
                         if (line.Contains("csproj"))
                         {
-                            string sub = line.Substring(53,line.Length-95);
+                            string sub = line.Substring(53, line.Length - 95);
                             //Console.WriteLine(sub);
                             string sub1 = sub.Substring(0, sub.IndexOf("\","));
+                            substring[counter] = sub1;
                             Console.WriteLine(sub1);
                             vcproj_array[counter] = path + "/" + sub1 + "/" + sub1 + ".csproj";
                             if (!Directory.Exists(root + "/" + sub1))
                             {
                                 Directory.CreateDirectory(root + "/" + sub1);
+                                Directory.CreateDirectory(root + "/" + sub1 + "/Properties");
                             }
                             File.Copy(vcproj_array[counter], root + "/" + sub1 + "/" + sub1 + ".csproj", true);
-                            Console.WriteLine(vcproj_array[counter]);
+                            Console.WriteLine(vcproj_array[counter]);                          
                             counter++;
                         }
                     }
@@ -92,23 +95,24 @@ namespace Lab3
                             if (line.Contains("Compile Include") || line.Contains("EmbeddedResource Include") || line.Contains("None Include"))
                             {
                                 string sub = line;
+                                sub = sub.Substring(sub.IndexOf("\"") + 1, sub.LastIndexOf("\"") - sub.IndexOf("\"") - 1);
+                                sub = sub.Replace("\\","/");
+                                string sub1 = substring[j];
+                                File.Copy(path + "/" + sub1 + "/" + sub, root + "/" + sub1 + "/" + sub, true);
                                 outputFiles_array[k] = sub;
                                 Console.WriteLine(outputFiles_array[k]);
                                 k++;
                             }
-                            
                         }
 
-                        if (j >= vcproj_array.Length || vcproj_array[j+1] == null)
+                        if (j >= vcproj_array.Length || vcproj_array[j + 1] == null)
                             break;
                     }
 
-
-
                     if (i >= files.Length)
-                        break;
-                    
-                }
+                            break;
+
+                }                
             }
             catch (Exception ex)
             {
