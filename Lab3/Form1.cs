@@ -14,7 +14,7 @@ namespace Lab3
 {
     public partial class Form1 : Form
     {
-        private string path = "E:/dokumenty_studia/zaawansowane_techniki_programowania_C#/ćwiczenia/cs_cwiczenia";
+        private string path = "C:/dokumenty_studia/zaawansowane_techniki_programowania_C#/ćwiczenia/cs_cwiczenia";
 
         public Form1()
         {
@@ -39,18 +39,29 @@ namespace Lab3
                 String[] vcproj_array = new String[100];
                 String[] outputFiles_array = new String[100];
 
+                string root = "C:/dokumenty_studia/zaawansowane_techniki_programowania_c#/ćwiczenia/kopia";
+
+                if (!Directory.Exists(root))
+                {
+                    Directory.CreateDirectory(root);
+                }
+
                 for (int i = 0; i < files.Length; i++)
                 {
                     Console.WriteLine(files[i]);
+                    string sub = files[i].Substring(path.Length, files[i].Length-path.Length);                    
+                    File.Copy(path + "/" + sub, root + "/" + sub, true);
                     if (i >= files.Length)
                         break;
                 }
 
+                int counter = 0;
                 for (int i = 0; i < files.Length; i++)
                 {
                     
                     System.IO.StreamReader file = new System.IO.StreamReader(files[i]);
                     string line;
+                    
 
                     while ((line = file.ReadLine()) != null)
                     {
@@ -60,8 +71,14 @@ namespace Lab3
                             //Console.WriteLine(sub);
                             string sub1 = sub.Substring(0, sub.IndexOf("\","));
                             Console.WriteLine(sub1);
-                            vcproj_array[i] = path + "/" + sub1 + "/" + sub1 + ".csproj";
-                            Console.WriteLine(vcproj_array[i]);
+                            vcproj_array[counter] = path + "/" + sub1 + "/" + sub1 + ".csproj";
+                            if (!Directory.Exists(root + "/" + sub1))
+                            {
+                                Directory.CreateDirectory(root + "/" + sub1);
+                            }
+                            File.Copy(vcproj_array[counter], root + "/" + sub1 + "/" + sub1 + ".csproj", true);
+                            Console.WriteLine(vcproj_array[counter]);
+                            counter++;
                         }
                     }
 
@@ -71,26 +88,24 @@ namespace Lab3
                         System.IO.StreamReader file2 = new System.IO.StreamReader(vcproj_array[j]);
 
                         while ((line = file2.ReadLine()) != null)
-                        {                            
+                        {
                             if (line.Contains("Compile Include") || line.Contains("EmbeddedResource Include") || line.Contains("None Include"))
                             {
                                 string sub = line;
                                 outputFiles_array[k] = sub;
                                 Console.WriteLine(outputFiles_array[k]);
+                                k++;
                             }
-                            k++;
+                            
                         }
 
-
-
-
-                        //if (j >= vcproj_array.Length)
-                        //    break;
+                        if (j >= vcproj_array.Length || vcproj_array[j+1] == null)
+                            break;
                     }
 
-                   
 
-                        if (i >= files.Length)
+
+                    if (i >= files.Length)
                         break;
                     
                 }
