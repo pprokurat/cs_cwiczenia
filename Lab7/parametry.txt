@@ -1,0 +1,1 @@
+-res=320x240 -inputdir=E:/dokumenty_studia/zaawansowane_techniki_programowania_C#/æwiczenia/cs_cwiczenia/Lab7/picturesInput -outputdir=E:/dokumenty_studia/zaawansowane_techniki_programowania_C#/æwiczenia/cs_cwiczenia/Lab7/picturesOutput
