@@ -57,7 +57,7 @@ namespace Lab7
                 Console.WriteLine(parametersLabels[i] + ": " + parameters[i]);
             }
 
-            string[] filePaths = Directory.GetFiles(@parameters[2], "*.jpg");
+            string[] filePaths = Directory.GetFiles(@parameters[2], "*.*");
             string[] out_filePaths = new String[filePaths.Length];
 
             for (int i = 0; i < filePaths.Length; i++)
@@ -68,11 +68,39 @@ namespace Lab7
 
                 if (File.Exists(out_filePaths[i]) == false)
                 {
-                    //File.Copy(filePaths[i], out_filePaths[i]);
-                    Image image = Bitmap.FromFile(filePaths[i]);
-                    Size size = new Size(Convert.ToInt32(parameters[0]), Convert.ToInt32(parameters[1]));
-                    image = ResizeImage(image, size);
-                    image.Save(out_filePaths[i], System.Drawing.Imaging.ImageFormat.Jpeg);
+                    try
+                    {
+                        string sub2 = sub.Substring(sub.IndexOf("."), sub.Length - sub.IndexOf("."));
+                        if (sub2 == ".jpg")
+                        {
+                            //File.Copy(filePaths[i], out_filePaths[i]);
+                            Image image = Bitmap.FromFile(filePaths[i]);
+                            Size size = new Size(Convert.ToInt32(parameters[0]), Convert.ToInt32(parameters[1]));
+                            image = ResizeImage(image, size);
+                            image.Save(out_filePaths[i], System.Drawing.Imaging.ImageFormat.Jpeg);
+                        }
+                        else if (sub2 == ".png")
+                        {
+                            Image image = Bitmap.FromFile(filePaths[i]);
+                            Size size = new Size(Convert.ToInt32(parameters[0]), Convert.ToInt32(parameters[1]));
+                            image = ResizeImage(image, size);
+                            image.Save(out_filePaths[i], System.Drawing.Imaging.ImageFormat.Png);
+                        }
+                        else
+                        {
+                            Image image = Bitmap.FromFile(filePaths[i]);
+                            Size size = new Size(Convert.ToInt32(parameters[0]), Convert.ToInt32(parameters[1]));
+                            image = ResizeImage(image, size);
+                            image.Save(out_filePaths[i], System.Drawing.Imaging.ImageFormat.Bmp);
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Blad przy konwersji plikow: " + e);
+                    }
+
+                    
+                    
                 }
                 else
                 {
