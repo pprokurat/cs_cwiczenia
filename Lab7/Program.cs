@@ -4,13 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 
 namespace Lab7
 {
     class Program
     {
-        static void Main(string[] args)
+        private static Image ResizeImage(Image image, Size newSize)
         {
+            Image newImage = new Bitmap(newSize.Width, newSize.Height);
+
+            using (Graphics GFX = Graphics.FromImage((Bitmap)newImage))
+            {
+                GFX.DrawImage(image, new Rectangle(Point.Empty, newSize));
+            }
+
+            return newImage;
+        }
+
+        static void Main(string[] args)
+        {          
             Console.WriteLine("Podaj parametry w formacie: -res=poziomxpion -inputdir=sciezka -outputdir=sciezka:\n");
             string input;
             input = Console.ReadLine();
@@ -55,7 +68,11 @@ namespace Lab7
 
                 if (File.Exists(out_filePaths[i]) == false)
                 {
-                    File.Copy(filePaths[i], out_filePaths[i]);
+                    //File.Copy(filePaths[i], out_filePaths[i]);
+                    Image image = Bitmap.FromFile(filePaths[i]);
+                    Size size = new Size(Convert.ToInt32(parameters[0]), Convert.ToInt32(parameters[1]));
+                    image = ResizeImage(image, size);
+                    image.Save(out_filePaths[i], System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
                 else
                 {
@@ -68,9 +85,17 @@ namespace Lab7
                         j++;
                     }
                     //Console.WriteLine(out_filePaths[i]);
-                    File.Copy(filePaths[i], out_filePaths[i]);
+                    //File.Copy(filePaths[i], out_filePaths[i]);
+                    Image image = Bitmap.FromFile(filePaths[i]);
+                    Size size = new Size(Convert.ToInt32(parameters[0]), Convert.ToInt32(parameters[1]));
+                    image = ResizeImage(image, size);
+                    image.Save(out_filePaths[i], System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
             }
+            
+
+            
+            
 
             Console.ReadLine();
         }
