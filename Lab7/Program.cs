@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Lab7
 {
@@ -41,6 +42,34 @@ namespace Lab7
             for (int i = 0; i <= 3; i++)
             {
                 Console.WriteLine(parametersLabels[i] + ": " + parameters[i]);
+            }
+
+            string[] filePaths = Directory.GetFiles(@parameters[2], "*.jpg");
+            string[] out_filePaths = new String[filePaths.Length];
+
+            for (int i = 0; i < filePaths.Length; i++)
+            {
+                string sub = filePaths[i].Substring(parameters[2].Length + 1, filePaths[i].Length - (parameters[2].Length +1));
+                //Console.WriteLine(i + 1 + " " + sub);
+                out_filePaths[i] = parameters[3] + "/" + sub;
+
+                if (File.Exists(out_filePaths[i]) == false)
+                {
+                    File.Copy(filePaths[i], out_filePaths[i]);
+                }
+                else
+                {
+                    int j = 1;
+                    string sub2 = sub.Substring(0, sub.Length - (sub.Length - sub.IndexOf(".")));
+                    string sub3 = sub.Substring(sub.IndexOf("."), sub.Length - sub.IndexOf("."));
+                    while (File.Exists(out_filePaths[i]) == true)
+                    {
+                        out_filePaths[i] = parameters[3] + "/" + sub2 + "_" + j + sub3;
+                        j++;
+                    }
+                    //Console.WriteLine(out_filePaths[i]);
+                    File.Copy(filePaths[i], out_filePaths[i]);
+                }
             }
 
             Console.ReadLine();
